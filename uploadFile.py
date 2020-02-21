@@ -4,6 +4,9 @@ def import_csvfile(file):
 	import pymongo
 	import json
 	import os
+	from datetime import datetime
+
+
  
 	mng_client = pymongo.MongoClient('mongodb://mPhase:mphase@cluster0-shard-00-00-2b0ur.mongodb.net:27017,cluster0-shard-00-01-2b0ur.mongodb.net:27017,cluster0-shard-00-02-2b0ur.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority')
 	print(mng_client)
@@ -16,8 +19,9 @@ def import_csvfile(file):
 	# data_json = json.dumps(data_json)
 
 	for item in data_json:
-		print(item)
 		item['date'] = item.pop('Date')
+		item['date'] = datetime.strftime(datetime.strptime(item['date'], '%d-%B-%Y'), '%Y-%m-%d')
+		print(item['date'])
 		item['openPrice'] = item.pop('Open Price')
 		item['highPrice'] = item.pop('High Price')
 		item['lowPrice'] = item.pop('Low Price')
@@ -30,6 +34,5 @@ def import_csvfile(file):
 		item['quantitiesToTrade'] = item.pop('% Deli. Qty to Traded Qty')
 		item['spreadHighLow'] = item.pop('Spread High-Low')
 		item['spreadOpenClose'] = item.pop('Spread Close-Open')
-
 	db_cm.remove()
 	db_cm.insert(data_json)
