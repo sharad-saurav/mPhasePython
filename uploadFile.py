@@ -9,8 +9,8 @@ def import_csvfile(file):
 
     mng_client = pymongo.MongoClient('mongodb://mPhase:mphase@cluster0-shard-00-00-2b0ur.mongodb.net:27017,cluster0-shard-00-01-2b0ur.mongodb.net:27017,cluster0-shard-00-02-2b0ur.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority')
     mng_db = mng_client['mPhase']
-    collection_name = 'stockData'
-    collection_name1 = 'stock'
+    collection_name = 'stock'
+    collection_name1 = 'stockData'
     db_cm = mng_db[collection_name]
     db_cm1 = mng_db[collection_name1]
     data = pd.read_csv(file)
